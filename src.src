@@ -1,7 +1,7 @@
 touch src.src log.log ypp.ypp lpp.lpp hpp.hpp cpp.cpp Makefile .gitignore
 
 Makefile =
-
+'
 log.log: ./exe.exe src.src
 	./exe.exe < src.src > log.log
 C = cpp.cpp ypp.tab.cpp lex.yy.c
@@ -13,5 +13,18 @@ ypp.tab.cpp: ypp.ypp
 	bison $<
 lex.yy.c: lpp.lpp
 	flex $<
+'
+	
+.gitignore =
+'
+*~
+*.swp
+exe.exe
+log.log
+ypp.tab.?pp
+lex.yy.c
+'
 
-p@y
+pp = { P: P+'.pp' }
+
+pp@y

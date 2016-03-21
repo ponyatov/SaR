@@ -3,11 +3,19 @@
 %}
 %defines %union { Sym*o; }
 %token <o> SYM
-%token <o> AT
-%type <o> ex
+%token <o> LC RC
+%token <o> EQ AT COLON
+%token <o> ADD
+%type <o> ex lambda
 %%
-REPL : | REPL ex { cout << $2->dump(); } ;
+REPL : | REPL ex 		{ cout << $2->dump(); } ;
 ex : SYM
-	| ex AT ex		{ $$=$1->at($3); }; 
+	| LC lambda RC		{ $$=$2; }
+	| EQ
+	| ex AT ex			{ $$=new Sym($3->val+"pp"); }
+;
+lambda :				{ $$=new Lambda(); }
+	| lambda SYM COLON	{ $$=$1; $$->par($2); }
+	| lambda ex			{ $$=$1; $$->push($2); }
 ;
 %%
